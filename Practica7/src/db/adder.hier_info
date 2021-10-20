@@ -1,11 +1,29 @@
 |adder
 SW[0] => in1.IN1
 SW[1] => in2.IN1
-LEDR[0] << halfAdder:comb_7.port3
-LEDR[1] << halfAdder:comb_7.port2
+SW[2] => cin.IN1
+LEDR[0] << FullAdder:comb_8.port4
+LEDR[1] << FullAdder:comb_8.port3
 
 
-|adder|halfAdder:comb_7
+|adder|FullAdder:comb_8
+in1 => in1.IN1
+in2 => in2.IN1
+cin => cin.IN1
+sum <= halfAdder:HA2.port2
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|FullAdder:comb_8|halfAdder:HA1
+in1 => sum.IN0
+in1 => cout.IN0
+in2 => sum.IN1
+in2 => cout.IN1
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|FullAdder:comb_8|halfAdder:HA2
 in1 => sum.IN0
 in1 => cout.IN0
 in2 => sum.IN1
