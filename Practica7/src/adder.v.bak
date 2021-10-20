@@ -1,0 +1,7 @@
+module adder(in1,in2,cout,suma);
+
+	//////////// SW //////////
+	input 		     [9:0]		SW;
+
+
+endmodule 

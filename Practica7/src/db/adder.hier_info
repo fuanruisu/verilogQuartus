@@ -1,0 +1,16 @@
+|adder
+SW[0] => in1.IN1
+SW[1] => in2.IN1
+LEDR[0] << halfAdder:comb_7.port3
+LEDR[1] << halfAdder:comb_7.port2
+
+
+|adder|halfAdder:comb_7
+in1 => sum.IN0
+in1 => cout.IN0
+in2 => sum.IN1
+in2 => cout.IN1
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
