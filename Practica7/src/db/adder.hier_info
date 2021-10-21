@@ -1,12 +1,44 @@
 |adder
-SW[0] => in1.IN1
-SW[1] => in2.IN1
-SW[2] => cin.IN1
-LEDR[0] << FullAdder:comb_8.port4
-LEDR[1] << FullAdder:comb_8.port3
+SW[0] => num4b1[0].IN1
+SW[1] => num4b1[1].IN1
+SW[2] => num4b1[2].IN1
+SW[3] => num4b1[3].IN1
+SW[4] => num4b2[0].IN1
+SW[5] => num4b2[1].IN1
+SW[6] => num4b2[2].IN1
+SW[7] => num4b2[3].IN1
+SW[8] => ~NO_FANOUT~
+SW[9] => cin.IN1
+LEDR[0] << RCA4:Adder4.port3
+LEDR[1] << RCA4:Adder4.port3
+LEDR[2] << RCA4:Adder4.port3
+LEDR[3] << RCA4:Adder4.port3
+LEDR[4] << RCA4:Adder4.port4
+LEDR[5] << <GND>
+LEDR[6] << <GND>
+LEDR[7] << <GND>
+LEDR[8] << <GND>
+LEDR[9] << <GND>
 
 
-|adder|FullAdder:comb_8
+|adder|RCA4:Adder4
+in1[0] => in1[0].IN1
+in1[1] => in1[1].IN1
+in1[2] => in1[2].IN1
+in1[3] => in1[3].IN1
+in2[0] => in2[0].IN1
+in2[1] => in2[1].IN1
+in2[2] => in2[2].IN1
+in2[3] => in2[3].IN1
+cin => cin.IN1
+sum[0] <= FullAdder:FA1.port3
+sum[1] <= FullAdder:FA2.port3
+sum[2] <= FullAdder:FA3.port3
+sum[3] <= FullAdder:FA4.port3
+cout <= FullAdder:FA4.port4
+
+
+|adder|RCA4:Adder4|FullAdder:FA1
 in1 => in1.IN1
 in2 => in2.IN1
 cin => cin.IN1
@@ -14,7 +46,7 @@ sum <= halfAdder:HA2.port2
 cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|adder|FullAdder:comb_8|halfAdder:HA1
+|adder|RCA4:Adder4|FullAdder:FA1|halfAdder:HA1
 in1 => sum.IN0
 in1 => cout.IN0
 in2 => sum.IN1
@@ -23,7 +55,85 @@ sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
 cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|adder|FullAdder:comb_8|halfAdder:HA2
+|adder|RCA4:Adder4|FullAdder:FA1|halfAdder:HA2
+in1 => sum.IN0
+in1 => cout.IN0
+in2 => sum.IN1
+in2 => cout.IN1
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA2
+in1 => in1.IN1
+in2 => in2.IN1
+cin => cin.IN1
+sum <= halfAdder:HA2.port2
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA2|halfAdder:HA1
+in1 => sum.IN0
+in1 => cout.IN0
+in2 => sum.IN1
+in2 => cout.IN1
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA2|halfAdder:HA2
+in1 => sum.IN0
+in1 => cout.IN0
+in2 => sum.IN1
+in2 => cout.IN1
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA3
+in1 => in1.IN1
+in2 => in2.IN1
+cin => cin.IN1
+sum <= halfAdder:HA2.port2
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA3|halfAdder:HA1
+in1 => sum.IN0
+in1 => cout.IN0
+in2 => sum.IN1
+in2 => cout.IN1
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA3|halfAdder:HA2
+in1 => sum.IN0
+in1 => cout.IN0
+in2 => sum.IN1
+in2 => cout.IN1
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA4
+in1 => in1.IN1
+in2 => in2.IN1
+cin => cin.IN1
+sum <= halfAdder:HA2.port2
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA4|halfAdder:HA1
+in1 => sum.IN0
+in1 => cout.IN0
+in2 => sum.IN1
+in2 => cout.IN1
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|adder|RCA4:Adder4|FullAdder:FA4|halfAdder:HA2
 in1 => sum.IN0
 in1 => cout.IN0
 in2 => sum.IN1
