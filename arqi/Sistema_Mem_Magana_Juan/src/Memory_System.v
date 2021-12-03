@@ -9,14 +9,16 @@ input clk_i,
 input write_enable_i,
 input [DATA_WIDTH-1:0] Write_Data,
 input [DATA_WIDTH-1:0] Address_i,
-
 output [DATA_WIDTH-1:0] Instruction_o
+//output sel,
+//output [DATA_WIDTH-1:0] rom, ram
 
 );
-//wire sel;
-//wire [$clog2(MEMORY_DEPTH)-2:0] outAddrRAM, outAddrROM;
-//wire [(DATA_WIDTH-1):0] ram;
-//wire [(DATA_WIDTH-1):0] rom;
+//Instruction_o
+wire sel;
+wire [4:0] outAddrRAM, outAddrROM;
+wire [DATA_WIDTH-1:0] ram;
+wire [DATA_WIDTH-1:0] rom;
 
 //Decoder address from 32 bits to 6 bits
 addrDecoderRAM #(
@@ -26,7 +28,7 @@ addrDecoderRAM #(
 addDecRAM
 (
 .addr(Address_i),
-.outAddr(outAddrRAM)
+.outAddr(outAddrRAM)//here instruction_o must be change for the wire to connect to the input address ram
 );
 
 //RAM instantiation
@@ -40,7 +42,7 @@ RAM1
 	.addr(outAddrRAM),
 	.we(write_enable_i), 
 	.clk(clk_i),
-	.q(ram)
+	.q(ram)//must be change for wire that will be connect to the mux input
 );
 
 
@@ -84,8 +86,8 @@ mux
 #(.WIDTH(DATA_WIDTH) )
 mux1
 (
-.ram(ram), 
-.rom(rom), 
+.in1(ram), 
+.in2(rom), 
 .sel(sel),
 .regOut(Instruction_o)
 );

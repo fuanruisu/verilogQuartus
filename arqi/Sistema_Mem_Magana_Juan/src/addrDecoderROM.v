@@ -3,7 +3,7 @@ parameter WIDTH = 32,
 parameter numPosMem = 64
 )(
 input [WIDTH-1:0] addr,
-output reg [WIDTH-1:0] outAddr
+output reg [$clog2(numPosMem)-2:0] outAddr
 );
 
 always @(addr) begin

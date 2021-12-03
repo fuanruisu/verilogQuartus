@@ -5,16 +5,16 @@ module single_port_ram
 #(parameter DATA_WIDTH=8, parameter ADDR_WIDTH=6)
 (
 	input [(DATA_WIDTH-1):0] data,
-	input [(DATA_WIDTH-1):0] addr,
+	input [$clog2(ADDR_WIDTH)-2:0] addr,
 	input we, clk,
-	output [(DATA_WIDTH-1):0] q
+	output [DATA_WIDTH-1:0] q
 );
 
 	// Declare the RAM variable
 	reg [DATA_WIDTH-1:0] ram[ADDR_WIDTH-1:0];
 
 	// Variable to hold the registered read address
-	reg [ADDR_WIDTH-1:0] addr_reg;
+	reg [$clog2(ADDR_WIDTH)-2:0] addr_reg;
 
 	always @ (posedge clk)
 	begin

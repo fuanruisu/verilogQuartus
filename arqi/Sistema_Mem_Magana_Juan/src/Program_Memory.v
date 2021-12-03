@@ -19,8 +19,8 @@ module Program_Memory
 	parameter DATA_WIDTH = 32
 )
 (
-	input [(DATA_WIDTH-1):0] Address_i,
-	output reg [(DATA_WIDTH-1):0] Instruction_o
+	input [$clog2(MEMORY_DEPTH)-2:0] Address_i,
+	output reg [DATA_WIDTH-1:0] Instruction_o
 );
 
 	// Declare the ROM variable

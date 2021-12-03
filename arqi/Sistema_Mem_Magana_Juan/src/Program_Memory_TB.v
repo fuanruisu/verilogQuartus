@@ -16,72 +16,12 @@ module Program_Memory_TB;
 parameter MEMORY_DEPTH = 64;
 parameter DATA_WIDTH = 32;
 reg clk_tb = 0, we_tb = 0;
-//wire sel_tb;
-reg [(DATA_WIDTH-1):0] Address_i_tb, data_tb;
-wire [(DATA_WIDTH-1):0] Instruction_o_tb;
+reg sel_tb;
+reg [(DATA_WIDTH-1):0] Address_i_tb, data_tb, ram, rom;
+wire [DATA_WIDTH-1:0] Instruction_o_tb;
 wire [$clog2(MEMORY_DEPTH)-2:0] addrMemDepth_tb;
 wire [DATA_WIDTH-1:0] outAddrROM, outAddrRAM;
 
-//ROM module instantiation  
-/*Program_Memory
-#
-(
-	.MEMORY_DEPTH(MEMORY_DEPTH),
-	.DATA_WIDTH(DATA_WIDTH)
-)
-DUV1
-(
-	.Address_i(Address_i_tb),
-	.Instruction_o(Instruction_o_tb)
-);*/
-
-//RAM module instantiation
-
-/*single_port_ram 
-#
-(
-	.ADDR_WIDTH(MEMORY_DEPTH),
-	.DATA_WIDTH(DATA_WIDTH)
-)
-DUV
-(
-	//With addr I can write and read the address 
-	.addr(Address_i_tb),
-	.data(data_tb),
-	.clk(clk_tb),
-	.we(we_tb),
-	.q(Instruction_o_tb)
-);*/
-
-//Decoder RAM/ROM address instantiation
-/*
-memDec
-#(.WIDTH(DATA_WIDTH))
-DUV
-(
-.addr(Address_i_tb),
-.sel(sel_tb)
-);*/
-
-//DecoderRAM instantiation
-/*
-addrDecoderRAM 
-#(
-.WIDTH(DATA_WIDTH),
-.numPosMem(MEMORY_DEPTH)
-)DUV(
-.addr(Address_i_tb),
-.outAddr(addrMemDepth_tb)
-);*/
-
-//DecoderRAM instantiation
-/*addrDecoderROM #(
-.WIDTH(DATA_WIDTH),
-.numPosMem(MEMORY_DEPTH)
-)DUV(
-.addr(Address_i_tb),
-.outAddr(addrMemDepth_tb)
-);*/
 
 Memory_System
 #
@@ -96,6 +36,8 @@ DUV
 .Instruction_o(Instruction_o_tb)
 
 );
+
+
 /*********************************************************/
 initial // Clock generator
   begin
@@ -107,14 +49,23 @@ initial // Clock generator
 initial begin: TB
 	integer i;
 
-	
-
+	#1 sel_tb = 1;
+	//#1 we_tb=1;
 	//Decoder RAM/ROM adddres testing
-	for (i = 0; i<=32; i = i+1)begin
-		#50 Address_i_tb = i;
+	for (i = 0; i<=32; i = i+4)begin
+		#50 Address_i_tb = 32'h00400000+i;
+		//#50 ram = 32'hafc12311+i;
 		//#50 Address_i_tb = 32'h10010000+i;
+		//#2 data_tb = 32'h22c4dda4+i;
 	end
-
+	#1 we_tb=1;
+	#1 sel_tb = 0;
+	for (i = 0; i<=32; i = i+4)begin
+		
+		//#50 Address_i_tb = 32'h00400000+i;
+		#50 Address_i_tb = 32'h10010000+i;
+		#2 data_tb = 32'h22c4dda4+i;
+	end
 	//start RAM testing
 	/*#1 we_tb = 1;
 	#50 Address_i_tb = 1;
